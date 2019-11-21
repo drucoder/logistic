@@ -3,7 +3,7 @@ define(['component/listPage'], function(listPage) {
         'markList',
         'resource->/api/mark',
         [
-            { id: "name", editor: "text" }
+            { id: 'name', editor: 'text' }
         ]
     )
 })
