@@ -25,14 +25,37 @@ define(function() {
                     autoheight: true,
                     autowidth: true,
                     editable: true,
-                    pager: 'markPager',
-                    datafetch: 3
+                    pager: tableId + 'Pager',
+                    datafetch: 10,
+                    on: {
+                        onItemClick: function(id) {
+                            var column = this.config.columns.find(function(col) {
+                                return col.id === id.column
+                            })
+                            var parentTable = this
+
+                            if (column.dialogUrl) {
+                                require([column.dialogUrl], function(dialogPage) {
+                                    webix.ui({
+                                        view: 'window',
+                                        head: 'Choose an item',
+                                        width: 400,
+                                        position: 'center',
+                                        modal: true,
+                                        body: dialogPage,
+                                        parentTable: parentTable,
+                                        cell: id,
+                                    }).show()
+                                })
+                            }
+                        }
+                    }
                 },
                 {
                     view: 'pager',
-                    id: 'markPager',
-                    size: 3,
-                    group: 3,
+                    id: tableId + 'Pager',
+                    size: 10,
+                    group: 10,
                     template: '{common.first()}{common.prev()}{common.pages()}{common.next()}{common.last()}'
                 }
             ]
